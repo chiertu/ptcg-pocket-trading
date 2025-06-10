@@ -1,0 +1,67 @@
+name: ptcg-pocket-trading
+
+services:
+  scraper:
+    build:
+      context: ./scraper
+      dockerfile: Dockerfile
+    image: ptcg-scraper:latest
+    container_name: ptcg-scraper-container
+    ports:
+      - "${SCRAPER_PORT}:${SCRAPER_PORT}"
+    volumes:
+      - ./data:/project/data
+    stdin_open: true
+    tty: true
+    command: jupyter notebook --ip 0.0.0.0 --no-browser --allow-root --NotebookApp.token=${JUPYTER_TOKEN} --NotebookApp.password=''
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: ptcg-frontend:latest
+    container_name: ptcg-frontend-container
+    ports:
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+    networks:
+      - frontnet
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: ptcg-backend:latest
+    container_name: ptcg-backend-container
+    networks:
+      - backnet
+    depends_on:
+      - postgres
+    ports:
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:${POSTGRES_PORT}/${POSTGRES_DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+      SERVER_PORT: ${BACKEND_PORT}
+
+  postgres:
+    build:
+      context: ./postgres
+      dockerfile: Dockerfile
+    image: ptcg-postgres:latest
+    container_name: ptcg-postgres-container
+    networks:
+      - backnet
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB_NAME}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      
+networks:
+  frontnet:
+  backnet:
+
