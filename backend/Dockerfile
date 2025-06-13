@@ -4,11 +4,12 @@ FROM maven:3.9.9-eclipse-temurin-21 AS build
 
 WORKDIR /app
 
-COPY pom.xml .
-COPY mvnw .
-COPY mvnw.cmd .
-COPY .mvn .mvn
-COPY src ./src
+COPY backend/pom.xml .
+COPY backend/mvnw .
+COPY backend/mvnw.cmd .
+COPY backend/.mvn .mvn
+COPY backend/src ./src
+COPY data src/main/resources/data
 
 RUN ./mvnw dependency:go-offline
 RUN ./mvnw clean package -DskipTests
