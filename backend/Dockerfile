@@ -9,6 +9,7 @@ COPY mvnw .
 COPY mvnw.cmd .
 COPY .mvn .mvn
 COPY src ./src
+COPY ../data src/main/resources/data
 
 RUN ./mvnw dependency:go-offline
 RUN ./mvnw clean package -DskipTests
