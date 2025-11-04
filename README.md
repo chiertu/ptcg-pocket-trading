@@ -55,6 +55,10 @@
 - https://drive.google.com/drive/folders/1_2YURmd7dYnCX3VuDLQobLNSJbAeavpt
 
 
+
+## TODO
+- currently the scrapper save images with spaces in them, and the process to remove the spaces is done mannually
+
 ## Contributor
 
 
