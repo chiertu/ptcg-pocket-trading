@@ -23,7 +23,7 @@ services:
     image: ptcg-frontend:latest
     container_name: ptcg-frontend-container
     ports:
-      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+      - "${FRONTEND_PORT}:${NGINX_PORT}"
     networks:
       - frontnet
     depends_on:
