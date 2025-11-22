@@ -35,4 +35,43 @@ public class PokemonCard extends Card {
     @Column(name = "card_retreat_costs")
     private List<EnergyType> cardRetreatCosts;
 
+    public CardStage getCardStage() {
+        return cardStage;
+    }
+
+    public void setCardStage(CardStage cardStage) {
+        this.cardStage = cardStage;
+    }
+
+    public Set<EnergyType> getCardTypes() {
+        return cardTypes;
+    }
+
+    public void setCardTypes(Set<EnergyType> cardTypes) {
+        this.cardTypes = cardTypes;
+    }
+
+    public Set<EnergyType> getCardWeaknesses() {
+        return cardWeaknesses;
+    }
+
+    public void setCardWeaknesses(Set<EnergyType> cardWeaknesses) {
+        this.cardWeaknesses = cardWeaknesses;
+    }
+
+    public Integer getCardHp() {
+        return cardHp;
+    }
+
+    public void setCardHp(Integer cardHp) {
+        this.cardHp = cardHp;
+    }
+
+    public List<EnergyType> getCardRetreatCosts() {
+        return cardRetreatCosts;
+    }
+
+    public void setCardRetreatCosts(List<EnergyType> cardRetreatCosts) {
+        this.cardRetreatCosts = cardRetreatCosts;
+    }
 }

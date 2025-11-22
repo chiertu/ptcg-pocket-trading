@@ -1,6 +1,5 @@
 package com.chiertu.ptcg_pocket_trading_backend.domain.entity;
 
-import com.chiertu.ptcg_pocket_trading_backend.domain.value.CardEffect;
 import com.chiertu.ptcg_pocket_trading_backend.domain.value.CardGeneration;
 import com.chiertu.ptcg_pocket_trading_backend.domain.value.CardRarity;
 import com.chiertu.ptcg_pocket_trading_backend.domain.value.CardRating;
@@ -19,7 +18,7 @@ public abstract class Card {
     @Column(name = "card_id")
     private Long cardId;
 
-    @Column(name = "card_code")
+    @Column(name = "card_code", nullable = false, unique = true)
     private String cardCode;
 
     @Column(name = "card_name")
@@ -30,8 +29,11 @@ public abstract class Card {
     private CardRating cardRating;
 
     @ManyToMany
-    @JoinTable(name = "card_pack_links", joinColumns = @JoinColumn(name = "card_id"))
-    @Column(name = "card_packs")
+    @JoinTable(
+            name = "card_packs_links",
+            joinColumns = @JoinColumn(name = "card_id"),
+            inverseJoinColumns = @JoinColumn(name = "pack_id")
+    )
     private List<CardPack> cardPacks;
 
     @Enumerated(EnumType.STRING)
@@ -46,9 +48,83 @@ public abstract class Card {
     @Column(name = "card_rarity")
     private CardRarity cardRarity;
 
-    @ElementCollection
-    @CollectionTable(name = "card_effects_links", joinColumns = @JoinColumn(name = "card_id"))
-    @Column(name = "card_effects")
+    @ManyToMany
+    @JoinTable(
+        name = "card_effects_links",
+        joinColumns = @JoinColumn(name = "card_id"),
+        inverseJoinColumns = @JoinColumn(name = "effect_id")
+    )
     private List<CardEffect> cardEffects;
 
+    public Long getCardId() {
+        return cardId;
+    }
+
+    public void setCardId(Long cardId) {
+        this.cardId = cardId;
+    }
+
+    public String getCardCode() {
+        return cardCode;
+    }
+
+    public void setCardCode(String cardCode) {
+        this.cardCode = cardCode;
+    }
+
+    public String getCardName() {
+        return cardName;
+    }
+
+    public void setCardName(String cardName) {
+        this.cardName = cardName;
+    }
+
+    public CardRating getCardRating() {
+        return cardRating;
+    }
+
+    public void setCardRating(CardRating cardRating) {
+        this.cardRating = cardRating;
+    }
+
+    public List<CardPack> getCardPacks() {
+        return cardPacks;
+    }
+
+    public void setCardPacks(List<CardPack> cardPacks) {
+        this.cardPacks = cardPacks;
+    }
+
+    public CardGeneration getCardGeneration() {
+        return cardGeneration;
+    }
+
+    public void setCardGeneration(CardGeneration cardGeneration) {
+        this.cardGeneration = cardGeneration;
+    }
+
+    public CardIllustrator getCardIllustrator() {
+        return cardIllustrator;
+    }
+
+    public void setCardIllustrator(CardIllustrator cardIllustrator) {
+        this.cardIllustrator = cardIllustrator;
+    }
+
+    public CardRarity getCardRarity() {
+        return cardRarity;
+    }
+
+    public void setCardRarity(CardRarity cardRarity) {
+        this.cardRarity = cardRarity;
+    }
+
+    public List<CardEffect> getCardEffects() {
+        return cardEffects;
+    }
+
+    public void setCardEffects(List<CardEffect> cardEffects) {
+        this.cardEffects = cardEffects;
+    }
 }

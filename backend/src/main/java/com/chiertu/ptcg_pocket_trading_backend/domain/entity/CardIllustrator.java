@@ -10,15 +10,27 @@ public class CardIllustrator {
     @Column(name = "illustrator_id")
     private Long illustratorId;
 
-    @Column(name = "illustrator_name")
+    @Column(name = "illustrator_name", nullable = false, unique = true)
     private String illustratorName;
+
+    // constructors
+    protected CardIllustrator() { }
 
     public CardIllustrator(String illustratorName) {
         this.illustratorName = illustratorName;
     }
 
-    public CardIllustrator() {
+    // getters & setters
+    public Long getIllustratorId() {
+        return illustratorId;
+    }
 
+    public String getIllustratorName() {
+        return illustratorName;
+    }
+
+    public void setIllustratorName(String illustratorName) {
+        this.illustratorName = illustratorName;
     }
 
 }

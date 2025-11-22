@@ -1,7 +1,6 @@
 package com.chiertu.ptcg_pocket_trading_backend.domain.value;
 
 public enum CardRating {
-    UNRATED("-"),
     D("D"),
     C("C"),
     B("B"),
@@ -19,13 +18,13 @@ public enum CardRating {
         return this.label;
     }
 
-    public static CardRating parseCardRating(String raw){
+    public static CardRating parse(String raw){
         String normalized = raw.trim().toUpperCase();
         for(CardRating r: CardRating.values()){
             if(r.label.equalsIgnoreCase(normalized)) {
                 return r;
             }
         }
-        return CardRating.UNRATED;
+        return null;
     }
 }

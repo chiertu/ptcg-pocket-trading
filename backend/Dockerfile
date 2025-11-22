@@ -8,10 +8,12 @@ COPY backend/pom.xml .
 COPY backend/mvnw .
 COPY backend/mvnw.cmd .
 COPY backend/.mvn .mvn
+RUN ./mvnw dependency:go-offline
+
+# copy source code and data (this busts cache whenever code changes?)
 COPY backend/src ./src
 COPY data src/main/resources/data
 
-RUN ./mvnw dependency:go-offline
 RUN ./mvnw clean package -DskipTests
 
 # ---------- STAGE 2: Build the application ----------
